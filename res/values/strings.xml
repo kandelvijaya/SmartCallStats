@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SmartCallStats</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="tvServiceStarterOff">Currently phone detection is off. <i>This will erode your phone call stat.</i></string>
+    <string name="tvServiceStarterON">Currently phone detection is <b>ON.</b><i>Exiting wont affect it!</i></string>
+	
+    <string name="textWhenToggleOn">Turn OFF Detection</string>
+    <string name="textWhenToggleOff">Turn ON Detection</string>
+    
+</resources>

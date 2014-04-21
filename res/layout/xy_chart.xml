@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="@color/beige"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stat of Received, Missed and total incoming calls in a week" 
+        
+        />
+    
+	<TextView
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:padding="5dip"
+	    android:text="Look up days before today:" 
+	    android:background="@color/forestgreen"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        >
+
+        <EditText
+            android:id="@+id/dayValue"
+            android:layout_width="44dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.47"
+            android:inputType="phone"
+            android:hint="Enter the days before to look for"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip"
+            android:text="y" 
+            android:visibility="gone"
+            />
+
+        <EditText
+            android:id="@+id/yValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:inputType="number" 
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btnUpdateChart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update Chart" 
+            
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/chart"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:orientation="horizontal" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/new_series"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="new series" 
+            android:visibility="gone"/>
+    </LinearLayout>
+
+</LinearLayout>

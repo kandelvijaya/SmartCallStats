@@ -1,0 +1,30 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    
+    <dimen name="text_size_title">20sp</dimen>
+    <dimen name="df_textsizelarge">25sp</dimen>
+    <dimen name="textsizelarge">15sp</dimen>
+    <dimen name="textsizesmall">10sp</dimen>
+    <dimen name="headerSize">14dip</dimen>
+   <dimen name="textsizedefault">16sp</dimen>
+   <dimen name="textsizebutton">30sp</dimen>
+    
+    <dimen name="imageDim">300dp</dimen>
+    
+    <dimen name="btnDim">20dp</dimen>
+    <dimen name="ic_sb">20dp</dimen>
+    <dimen name="textLinkSize">14dp</dimen>
+    <dimen name="scrollFooter">60sp</dimen>
+    <dimen name="scrollFooterUp">80sp</dimen>
+    
+    <dimen name="bigButtonWidth">50sp</dimen>
+    
+    <dimen name="dash_mar">15sp</dimen>
+    <dimen name="dash_pad">30sp</dimen>
+
+    <dimen name="dash_btn">300sp</dimen>
+    
+</resources>

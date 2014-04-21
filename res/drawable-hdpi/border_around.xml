@@ -1,0 +1,20 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <stroke
+        android:dashWidth="5dip"
+        android:width="4sp"
+        android:color="@color/darkgrey_speedofsex" />
+
+    <solid android:color="@color/bg_color"
+        />
+
+    
+    <padding
+        android:bottom="3sp"
+        android:left="3sp"
+        android:right="3sp"
+        android:top="3sp" />
+
+    <corners android:radius="4sp" />
+
+</shape>

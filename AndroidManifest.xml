@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.doprog.smartcallstats"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="15" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.doprog.smartcallstats.Launcher"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".TimeTracker"
+            android:label="Time Tracker (SCS)" >
+        </activity>
+        <activity
+            android:name="com.doprog.smartcallstats.ViewHistory"
+            android:label="View History" >
+        </activity>
+        <activity
+            android:name="com.doprog.graphformissed.DynamicGraphActivity"
+            android:label="View Graph" >
+        </activity>
+        <activity
+            android:name="com.doprog.smartcallstats.About"
+            android:label="About the App" >
+        </activity>
+        <activity
+            android:name="com.doprog.smartcallstats.ViewReport"
+            android:label="About the App" >
+        </activity>
+        
+         <activity
+            android:name="com.doprog.smartcallstats.RuleSetter"
+            android:label="About the App" >
+        </activity>
+        <activity android:name="org.achartengine.chartdemo.demo.chart.XYChartBuilder" />
+        <activity android:name="org.achartengine.chartdemo.demo.chart.PieChartBuilder" />
+        <activity android:name="org.achartengine.GraphicalActivity" />
+        <activity android:name=".GeneratedChartDemo" />
+
+        <service
+            android:name=".CallDetectService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+    </application>
+
+</manifest>

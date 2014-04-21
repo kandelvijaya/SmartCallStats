@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="lighgreen" type="color">#90EE90</item>
+    <item name="titlebarBg" type="color">@color/forestgreen</item>
+    <item name="titlebarTxt" type="color">#FFFFFF</item>
+    <item name="bodyBg" type="color">@color/seashell</item>
+    <item name="bodyTxt" type="color">@color/seashellTextColor</item>
+    <item name="btnCallBg" type="color">#9EC31D</item>
+    <item name="btnCallBgHilighted" type="color">#FEB300</item>
+    <item name="btnCallBgPressed" type="color">#98FFFD</item>
+    <item name="btnTxt" type="color">#FFFFFF</item>
+    <item name="seashell" type="color">#FFF5EE</item>
+    <item name="seashelltop" type="color">#00CC00</item>
+    <item name="seashellTextColor" type="color">@color/dimgrey</item>
+    <item name="dimgrey" type="color">#696969</item>
+    <item name="forestgreen" type="color">#228B22</item>
+    <item name="darkkhaki" type="color">#BDB76B</item>
+    <item name="floralwhite" type="color">#FFFAF0</item>
+    <item name="limegreen" type="color">#32CD32</item>
+    <item name="heavygreen" type="color">#006600</item>
+    <item name="heavygreen2" type="color">#097054</item>
+    <item name="orange2" type="color">#FF9900</item>
+    <item name="blue3" type="color">#005B9A</item>
+    <item name="blue2" type="color">#0099CC</item>
+    <item name="yellow2" type="color">#FFDE00</item>
+    <item name="heavygreen3" type="color">#266A2E</item>
+    <item name="heavygreen4" type="color">#005502</item>
+    <item name="lightskyblue" type="color">#A4D3EE</item>
+    <item name="search_bar" type="color">#BBBB88</item>
+    <item name="bg_color" type="color">#cdd0cd</item>
+    <item name="prevbackgroundcolor" type="color">#DDDDAA</item>
+    <item name="white" type="color">#ffffff</item>
+    <item name="yellogreen" type="color">#9ACD32</item>
+    <item name="beige" type="color">#F5F5DC</item>
+    <item name="lavendar" type="color">#E6E6FA</item>
+    <item name="mediumseagreen" type="color">#3CB371</item>
+    <item name="transgreen" type="color">#50000000</item>
+    <item name="somesearch" type="color">#eedebb</item>
+    <item name="orange" type="color">#FFA500</item>
+    <item name="mozblue" type="color">#51B5FF</item>
+    <item name="orange_red" type="color">#FF4500</item>
+    <item name="black" type="color">#000000</item>
+    <item name="zoc" type="color">#2B91A6</item>
+    <item name="grey" type="color">#BEBEBE</item>
+    <item name="darkgrey_speedofsex" type="color">#696969</item>
+    <item name="btnDoc" type="color">@color/orange</item>
+    <item name="btnDocHilighted" type="color">@color/forestgreen</item>
+    <item name="btnDocPressed" type="color">@color/orange_red</item>
+
+</resources>
