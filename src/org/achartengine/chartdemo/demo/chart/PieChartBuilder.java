@@ -107,7 +107,6 @@ public class PieChartBuilder extends Activity {
 							dayno = day + 1; // this is the hack for not sending
 												// 0 day before so that we are
 												// still under
-							// array index
 						}
 					} catch (Exception e) {
 						ToastGreen.toastBad("Please enter a integer", context);
