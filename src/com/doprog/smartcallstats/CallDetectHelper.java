@@ -30,6 +30,11 @@ public class CallDetectHelper {
 	}
 
 	// INNER CLASSES ARE DEFINED BELOW THIS PART
+
+	
+	
+	
+	
 	private class IncomingCallListener extends PhoneStateListener {
 
 		// general variables
@@ -52,7 +57,13 @@ public class CallDetectHelper {
 			 * RECEIVED=====startTime. endTime are system time at that
 			 * consequent states
 			 */
+			
+			//CHECK THE RULE FOR THIS CALLER AND BLOCK IF NECESSARY
+			blockTheCallerIfNeeded(incomingNumber);
 
+			
+			
+			
 			short previousState = 0; // 0 for idle, 1 for ringing and 2 for
 										// offhook
 			switch (state) {
@@ -84,6 +95,23 @@ public class CallDetectHelper {
 				previousState = 0;
 				break;
 			}
+		}
+		
+		
+
+		private void blockTheCallerIfNeeded(String incomingNumber) {
+			LocalDb ldb=new LocalDb(ctx);
+			ldb.open();
+			short blockCode=ldb.getBlockCodeFor(incomingNumber);
+			ldb.close();
+			
+			Log.d("checkpoint", "detector blockCode for this number "+blockCode);
+			
+			if(blockCode==1){
+				//END THIS CALL RIGHT NOW EQUIVALENT TO BLOCKING
+				
+			}
+			
 		}
 
 		private void doForReceivedCalls() {
