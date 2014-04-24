@@ -22,8 +22,8 @@ public class MyReceiver extends BroadcastReceiver {
 		// notify.sound=Uri.parse(get);
 		// notify.sound = Uri.parse("android.resource://"
 		// + context.getPackageName() + "/" + R.raw.siren);
-		notify.defaults |= Notification.DEFAULT_SOUND;
-		long[] vib = new long[] { 1000, 2000 };
+		notify.defaults |= Notification.PRIORITY_HIGH;
+		long[] vib = new long[] { 1000, 2000, 20000, 3000, 20000, 1000 };
 		notify.vibrate = vib;
 		Intent in = new Intent(context, Launcher.class);
 		PendingIntent pin = PendingIntent.getActivity(context, 0, in, 0);
