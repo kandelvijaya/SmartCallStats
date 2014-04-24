@@ -1,5 +1,7 @@
 package com.doprog.smartcallstats;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.telephony.PhoneStateListener;
@@ -117,6 +119,22 @@ public class CallDetectHelper {
 				phoneState = "Missed";
 				sendTimeToTrack(startTime, endTime);
 				startTime = endTime = 0;
+
+				// get the remind interval if this caller has some rules
+				// attached to it
+				LocalDb ldb = new LocalDb(ctx);
+				ldb.open();
+
+				int remindIntervalInMinutes = ldb
+						.getRemindInterval(callingNumber);
+				Log.d("checkpoint", "" + remindIntervalInMinutes);
+
+				ldb.close();
+
+				// now take the time check if its not 0; 0 is default so exclude
+				// it then set the alarm
+				remindTheUser(remindIntervalInMinutes);
+
 			}
 
 			// if (startTalkTime != 0 && endTalkTime>0) {
@@ -124,6 +142,27 @@ public class CallDetectHelper {
 			// sendTimeToTrack(startTalkTime, endTalkTime);
 			// startTalkTime=0;
 			// }
+		}
+
+		private void remindTheUser(int remindIntervalInMinutes) {
+			if (remindIntervalInMinutes != 0) {
+
+				long nextRinger= System.currentTimeMillis()+ remindIntervalInMinutes*1000*60; 
+				
+				Log.d("Current Time ", ""+System.currentTimeMillis());
+				Log.d("Rinder Time", ""+nextRinger);
+				
+				AlarmManager alm = (AlarmManager) ctx
+						.getSystemService(ctx.ALARM_SERVICE);
+				Intent in = new Intent(ctx, MyReceiver.class);
+
+				in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+						| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				PendingIntent pin = PendingIntent.getBroadcast(ctx, 0, in,
+						PendingIntent.FLAG_UPDATE_CURRENT);
+				alm.set(AlarmManager.RTC, nextRinger, pin);
+			}
+
 		}
 
 		private void sendTimeToTrack(long start, long end) {
@@ -140,8 +179,14 @@ public class CallDetectHelper {
 			intentSendTime.putExtra("callingNumber", callingNumber);
 			if (callingNumber != null) {
 				if (!callingNumber.isEmpty()) {
-					ctx.startActivity(intentSendTime);
-					Log.d("checkpoint", "calling number is " + callingNumber);
+					if (!phoneState.equals("Received")) { // dont pop up for
+															// received call
+															// this will
+															// distract
+						ctx.startActivity(intentSendTime);
+						Log.d("checkpoint", "calling number is "
+								+ callingNumber);
+					}
 				}
 			}
 

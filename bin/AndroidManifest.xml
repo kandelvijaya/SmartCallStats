@@ -10,6 +10,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission  android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"
@@ -43,12 +44,12 @@
         </activity>
         <activity
             android:name="com.doprog.smartcallstats.ViewReport"
-            android:label="About the App" >
+            android:label="View Report" >
         </activity>
         
          <activity
             android:name="com.doprog.smartcallstats.RuleSetter"
-            android:label="About the App" >
+            android:label="Rule Setter" >
         </activity>
         <activity android:name="org.achartengine.chartdemo.demo.chart.XYChartBuilder" />
         <activity android:name="org.achartengine.chartdemo.demo.chart.PieChartBuilder" />
@@ -60,6 +61,8 @@
             android:enabled="true"
             android:exported="false" >
         </service>
+        
+        <receiver android:name="com.doprog.smartcallstats.MyReceiver"></receiver>
     </application>
 
 </manifest>

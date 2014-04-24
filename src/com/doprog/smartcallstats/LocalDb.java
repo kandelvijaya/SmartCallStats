@@ -317,22 +317,21 @@ public class LocalDb extends SQLiteAssetOpenHelper {
 	public void updateRulesForThisNumber(int priorityLevel, int remindInterval,
 			boolean blockesStatus, String number) {
 		int callerid = 0;
-		Cursor cur=null;
+		Cursor cur = null;
 
 		// get the callerid of this number
-		callerid=getCallerId(number);
-		Log.d("Checkpoint", "caller id is "+callerid);
-		
-		
+		callerid = getCallerId(number);
+		Log.d("Checkpoint", "caller id is " + callerid);
+
 		// check wether rules exist for this callernumer
 		cur = db.rawQuery("select remindinterval from rule where callerid='"
 				+ callerid + "'", null);
-		
+
 		if (cur != null) {
 			if (cur.getCount() > 0) {
 				// record exist update it
 				cur.moveToFirst();
-				t("remindinterval is"+cur.getString(0));
+				t("remindinterval is" + cur.getString(0));
 				updateRule(callerid, priorityLevel, remindInterval,
 						blockesStatus);
 				t("insisde update");
@@ -348,13 +347,15 @@ public class LocalDb extends SQLiteAssetOpenHelper {
 	}
 
 	/**
-	 * This method is a recursive one. Takes callernumber, inserts into caller and returns its row if its not there before.
-	 * If already present it retrives the callerid.
+	 * This method is a recursive one. Takes callernumber, inserts into caller
+	 * and returns its row if its not there before. If already present it
+	 * retrives the callerid.
+	 * 
 	 * @param callernumber
 	 * @return callerid
 	 */
 	private int getCallerId(String number) {
-		int callerid=0;
+		int callerid = 0;
 		Cursor cur = db.rawQuery(
 				"select callerid from caller where callernumber = '" + number
 						+ "'", null);
@@ -363,7 +364,7 @@ public class LocalDb extends SQLiteAssetOpenHelper {
 				// yes entry
 				cur.moveToFirst();
 				callerid = cur.getShort(0);
-				t("here retriving and the value is "+callerid);
+				t("here retriving and the value is " + callerid);
 				return callerid;
 			} else {
 				// no entry
@@ -371,11 +372,11 @@ public class LocalDb extends SQLiteAssetOpenHelper {
 				cv.put("callernumber", number);
 				db.insert("caller", null, cv);
 				t("just inserted the number, now retriving");
-				callerid=getCallerId(number);
+				callerid = getCallerId(number);
 				return callerid;
 			}
 		}
-		
+
 		t("Ended");
 		return 0;
 	}
@@ -400,9 +401,28 @@ public class LocalDb extends SQLiteAssetOpenHelper {
 		db.update("rule", cv, "callerid='" + callerid + "'", null);
 
 	}
-	
-	private void t(String msg){
-		Log.d("checkpoint",msg);
+
+	private void t(String msg) {
+		Log.d("checkpoint", msg);
+	}
+
+	public int getRemindInterval(String callingNumber) {
+		Cursor cur = null;
+		String sql = "select r.remindinterval from rule r join caller c on r.callerid=c.callerid and c.callernumber='"
+				+ callingNumber + "'";
+		cur=db.rawQuery(sql, null);
+		
+		int remindinterval=0;
+		
+		if(cur!=null){
+			if(cur.getCount()>0){
+				cur.moveToFirst();
+				remindinterval=cur.getShort(0);
+				return remindinterval;
+			}
+		}
+		
+		return remindinterval;
 	}
 
 }
