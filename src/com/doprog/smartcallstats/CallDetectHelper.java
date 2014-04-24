@@ -117,6 +117,8 @@ public class CallDetectHelper {
 				phoneState = "Missed";
 				sendTimeToTrack(startTime, endTime);
 				startTime = endTime = 0;
+				
+				// get the remind interval if this caller has some rules attached to it
 			}
 
 			// if (startTalkTime != 0 && endTalkTime>0) {
@@ -140,8 +142,11 @@ public class CallDetectHelper {
 			intentSendTime.putExtra("callingNumber", callingNumber);
 			if (callingNumber != null) {
 				if (!callingNumber.isEmpty()) {
-					ctx.startActivity(intentSendTime);
-					Log.d("checkpoint", "calling number is " + callingNumber);
+					if (!phoneState.equals("Received")) {	//dont pop up for received call this will distract
+						ctx.startActivity(intentSendTime);
+						Log.d("checkpoint", "calling number is "
+								+ callingNumber);
+					}
 				}
 			}
 
