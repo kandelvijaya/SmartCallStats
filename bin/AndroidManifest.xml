@@ -10,7 +10,12 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<<<<<<< HEAD
     <uses-permission  android:name="android.permission.VIBRATE"/>
+=======
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission  android:name="android.permission.CALL_PHONE"/>
+>>>>>>> Detection
 
     <application
         android:allowBackup="true"
@@ -46,8 +51,7 @@
             android:name="com.doprog.smartcallstats.ViewReport"
             android:label="View Report" >
         </activity>
-        
-         <activity
+        <activity
             android:name="com.doprog.smartcallstats.RuleSetter"
             android:label="Rule Setter" >
         </activity>
@@ -61,8 +65,21 @@
             android:enabled="true"
             android:exported="false" >
         </service>
+<<<<<<< HEAD
         
         <receiver android:name="com.doprog.smartcallstats.MyReceiver"></receiver>
+=======
+
+        <receiver android:name="com.doprog.smartcallstats.MyReceiver" >
+        </receiver>
+        
+        
+        <receiver android:name=".CallReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.PHONE_STATE" />
+            </intent-filter>
+        </receiver>
+>>>>>>> Detection
     </application>
 
 </manifest>

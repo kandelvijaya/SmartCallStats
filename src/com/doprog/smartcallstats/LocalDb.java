@@ -315,7 +315,7 @@ public class LocalDb extends SQLiteAssetOpenHelper {
 	}
 
 	public void updateRulesForThisNumber(int priorityLevel, int remindInterval,
-			boolean blockesStatus, String number) {
+			short blockCode, String number) {
 		int callerid = 0;
 		Cursor cur = null;
 
@@ -333,12 +333,12 @@ public class LocalDb extends SQLiteAssetOpenHelper {
 				cur.moveToFirst();
 				t("remindinterval is" + cur.getString(0));
 				updateRule(callerid, priorityLevel, remindInterval,
-						blockesStatus);
+						blockCode);
 				t("insisde update");
 			} else {
 				// record doesnot exist insert it
 				insertRule(callerid, priorityLevel, remindInterval,
-						blockesStatus);
+						blockCode);
 				t("insisde entry");
 			}
 		}
@@ -382,22 +382,22 @@ public class LocalDb extends SQLiteAssetOpenHelper {
 	}
 
 	private void insertRule(int callerid, int priorityLevel,
-			int remindInterval, boolean blockesStatus) {
+			int remindInterval, short blockCode) {
 		ContentValues cv = new ContentValues();
 		cv.put("callerid", callerid);
 		cv.put("prioritylevel", priorityLevel);
 		cv.put("remindinterval", remindInterval);
-		cv.put("isblocked", blockesStatus);
+		cv.put("isblocked", blockCode);
 		db.insert("rule", null, cv);
 	}
 
 	private void updateRule(int callerid, int priorityLevel,
-			int remindInterval, boolean blockesStatus) {
+			int remindInterval, short blockCode) {
 		ContentValues cv = new ContentValues();
 
 		cv.put("prioritylevel", priorityLevel);
 		cv.put("remindinterval", remindInterval);
-		cv.put("isblocked", blockesStatus);
+		cv.put("isblocked", blockCode);
 		db.update("rule", cv, "callerid='" + callerid + "'", null);
 
 	}
@@ -423,6 +423,24 @@ public class LocalDb extends SQLiteAssetOpenHelper {
 		}
 		
 		return remindinterval;
+<<<<<<< HEAD
+=======
+	}
+
+	public short getBlockCodeFor(String incomingNumber) {
+		
+		String sql="select r.isblocked from rule r join caller c on r.callerid=c.callerid and c.callernumber='"+incomingNumber+"'";
+		Cursor cur= db.rawQuery(sql, null);
+		
+		if(cur!=null){
+			if(cur.getCount()>0){
+				cur.moveToFirst();
+				return cur.getShort(0);
+			}
+		}
+		
+		return 0;
+>>>>>>> Detection
 	}
 
 }

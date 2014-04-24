@@ -1,5 +1,10 @@
 package com.doprog.smartcallstats;
 
+<<<<<<< HEAD
+=======
+import java.lang.reflect.Method;
+
+>>>>>>> Detection
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -8,12 +13,19 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.android.internal.telephony.ITelephony;
+
 public class CallDetectHelper {
 
 	// general variables
 	private Context ctx;
 	TelephonyManager tm;
 	IncomingCallListener incomingListener;
+	private short thisCallWasBlocked = 0; // 1 for blocked
+
+	/*
+	 * When a call is blocked it should be stored as type blocked
+	 */
 
 	public CallDetectHelper(Context c) {
 		this.ctx = c;
@@ -30,6 +42,7 @@ public class CallDetectHelper {
 	}
 
 	// INNER CLASSES ARE DEFINED BELOW THIS PART
+
 	private class IncomingCallListener extends PhoneStateListener {
 
 		// general variables
@@ -52,6 +65,9 @@ public class CallDetectHelper {
 			 * RECEIVED=====startTime. endTime are system time at that
 			 * consequent states
 			 */
+
+			// CHECK THE RULE FOR THIS CALLER AND BLOCK IF NECESSARY
+			blockTheCallerIfNeeded(incomingNumber);
 
 			short previousState = 0; // 0 for idle, 1 for ringing and 2 for
 										// offhook
@@ -79,11 +95,48 @@ public class CallDetectHelper {
 				endTalkTime = endTime;
 				Log.d("checkpoint", "" + endTime + ":::idle state");
 				// (ONRESEARCH)
-				doForMissedCalls();
-				doForTalkTime();
+				if (thisCallWasBlocked == 1) {
+					//store as blocked call type
+					doForBlockedCalls();
+					
+				} else {
+					doForMissedCalls();
+					doForTalkTime();
+				}
 				previousState = 0;
 				break;
 			}
+		}
+
+		private void blockTheCallerIfNeeded(String incomingNumber) {
+			LocalDb ldb = new LocalDb(ctx);
+			ldb.open();
+			short blockCode = ldb.getBlockCodeFor(incomingNumber);
+			ldb.close();
+
+			Log.d("checkpoint", "detector blockCode for this number "
+					+ blockCode);
+
+			if (blockCode == 1) {
+				// END THIS CALL RIGHT NOW EQUIVALENT TO BLOCKING
+				try {
+					TelephonyManager manager = (TelephonyManager) ctx
+							.getSystemService(Context.TELEPHONY_SERVICE);
+					Class c = Class.forName(manager.getClass().getName());
+					Method m = c.getDeclaredMethod("getITelephony");
+					m.setAccessible(true);
+					ITelephony telephony = (ITelephony) m.invoke(manager);
+					telephony.endCall();
+				} catch (Exception e) {
+					Log.d("", e.getMessage());
+				}
+				
+				//set the wasblocked byte
+				thisCallWasBlocked=1;
+			}else{
+				thisCallWasBlocked=0;
+			}
+
 		}
 
 		private void doForReceivedCalls() {
@@ -142,6 +195,65 @@ public class CallDetectHelper {
 			// sendTimeToTrack(startTalkTime, endTalkTime);
 			// startTalkTime=0;
 			// }
+		}
+		
+		private void doForBlockedCalls() {
+			// ---------track the time duration to the caller
+			// in the future put it into corresponding databse
+			// BE SURE TO CHECK IF START TIME IS NOT 0,sometimes genreal states
+			// might be this without initiator
+			if (startTime != 0) {
+				// either a call is accepted or missed
+				// duration between ringing to offhook or idle
+				phoneState = "Blocked";
+				sendTimeToTrack(startTime, endTime);
+				startTime = endTime = 0;
+//
+//				// get the remind interval if this caller has some rules
+//				// attached to it
+//				LocalDb ldb = new LocalDb(ctx);
+//				ldb.open();
+//
+//				int remindIntervalInMinutes = ldb
+//						.getRemindInterval(callingNumber);
+//				Log.d("checkpoint", "" + remindIntervalInMinutes);
+//
+//				ldb.close();
+//
+//				// now take the time check if its not 0; 0 is default so exclude
+//				// it then set the alarm
+//				remindTheUser(remindIntervalInMinutes);
+
+			}
+
+			// if (startTalkTime != 0 && endTalkTime>0) {
+			// // the call was received::: send the talk time
+			// sendTimeToTrack(startTalkTime, endTalkTime);
+			// startTalkTime=0;
+			// }
+		}
+
+
+		private void remindTheUser(int remindIntervalInMinutes) {
+			if (remindIntervalInMinutes != 0) {
+
+				long nextRinger = System.currentTimeMillis()
+						+ remindIntervalInMinutes * 1000 * 60;
+
+				Log.d("Current Time ", "" + System.currentTimeMillis());
+				Log.d("Rinder Time", "" + nextRinger);
+
+				AlarmManager alm = (AlarmManager) ctx
+						.getSystemService(ctx.ALARM_SERVICE);
+				Intent in = new Intent(ctx, MyReceiver.class);
+
+				in.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+						| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				PendingIntent pin = PendingIntent.getBroadcast(ctx, 0, in,
+						PendingIntent.FLAG_UPDATE_CURRENT);
+				alm.set(AlarmManager.RTC, nextRinger, pin);
+			}
+
 		}
 
 		private void remindTheUser(int remindIntervalInMinutes) {

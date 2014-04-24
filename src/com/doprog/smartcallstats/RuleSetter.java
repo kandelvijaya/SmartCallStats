@@ -60,10 +60,15 @@ public class RuleSetter extends Activity implements View.OnClickListener {
 		etPriorityLevel.setText(detail[1]);
 		etRemindInterval.setText(detail[2]);
 
-		if(Boolean.parseBoolean(detail[3])){
+		short hasBeenBlocked=(short) Integer.parseInt(detail[3]);		//1 for blocked 0 for not blocked
+		
+		
+		if(hasBeenBlocked==1){
 			isBlocked=true;
+			Log.d("checkpoint", "blocked"+detail[3]);
 		}else{
 			isBlocked=false;
+			Log.d("checkpoint", "not blocked"+ detail[3]);
 		}
 
 		changeBlockStatus();
@@ -119,17 +124,18 @@ public class RuleSetter extends Activity implements View.OnClickListener {
 			
 			blockesStatus=isBlocked;
 			
+			short blockCode=0;
+			
 			if(blockesStatus){
 				Log.d("checkpoint", "blocked");
-			}else{
-				Log.d("checkpoint", "not blocked");
+				blockCode=1;
 			}
 
 			if (isValueOkay) {
 				LocalDb ldb = new LocalDb(context);
 				ldb.open();
 				ldb.updateRulesForThisNumber(priorityLevel, remindInterval,
-						blockesStatus, tvNumber.getText().toString());
+						blockCode, tvNumber.getText().toString());
 				ldb.close();
 
 				ToastGreen.toastGood("Successfully Updated: REFRESH to see!! ",
