@@ -1,10 +1,8 @@
 package com.doprog.smartcallstats;
 
-<<<<<<< HEAD
-=======
+
 import java.lang.reflect.Method;
 
->>>>>>> Detection
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
