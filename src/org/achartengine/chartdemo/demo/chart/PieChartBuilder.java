@@ -23,9 +23,9 @@ import org.achartengine.renderer.DefaultRenderer;
 import org.achartengine.renderer.SimpleSeriesRenderer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.doprog.smartcallstats.LocalDb;
 import com.doprog.smartcallstats.R;
+import com.doprog.smartcallstats.ToastGreen;
 
 public class PieChartBuilder extends Activity {
 	/** Colors to be used for the pie slices. */
@@ -52,6 +53,8 @@ public class PieChartBuilder extends Activity {
 	private GraphicalView mChartView;
 
 	private int dayno = 7;
+
+	private Context context;
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedState) {
@@ -72,6 +75,9 @@ public class PieChartBuilder extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.xy_chart);
+
+		context = getApplicationContext();
+
 		dayValue = (EditText) findViewById(R.id.dayValue);
 		mRenderer.setZoomButtonsVisible(true);
 		mRenderer.setStartAngle(180);
@@ -84,12 +90,30 @@ public class PieChartBuilder extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (dayValue != null) {
-					int day = Integer.parseInt(dayValue.getText().toString());
-					if (day >= 0) {
-						System.out.println(day);
-						dayno = day+1;		//this is the hack for not sending 0 day before so that we are still under 
-						//array index
+
+					// validate the day value to only hold integer from 1 and
+					// above
+					String value = dayValue.getText().toString();
+
+					if (value.isEmpty()) {
+						return;
 					}
+
+					int day = 7;
+					try {
+						day = Integer.parseInt(value);
+						if (day >= 0) {
+							System.out.println(day);
+							dayno = day + 1; // this is the hack for not sending
+												// 0 day before so that we are
+												// still under
+							// array index
+						}
+					} catch (Exception e) {
+						ToastGreen.toastBad("Please enter a integer", context);
+						return;
+					}
+
 				}
 
 				drawTheChart();

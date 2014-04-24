@@ -88,12 +88,13 @@ public final class R {
     public static final class drawable {
         public static final int border_around=0x7f020000;
         public static final int border_around_listitem=0x7f020001;
-        public static final int ic_bad=0x7f020002;
-        public static final int ic_good=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int listbutton=0x7f020005;
-        public static final int main_btn=0x7f020006;
-        public static final int phone_button=0x7f020007;
+        public static final int call=0x7f020002;
+        public static final int ic_bad=0x7f020003;
+        public static final int ic_good=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int listbutton=0x7f020006;
+        public static final int main_btn=0x7f020007;
+        public static final int phone_button=0x7f020008;
     }
     public static final class id {
         public static final int action_settings=0x7f09001e;
