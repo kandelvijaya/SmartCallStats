@@ -2,9 +2,12 @@ package com.doprog.smartcallstats;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -57,9 +60,12 @@ public class RuleSetter extends Activity implements View.OnClickListener {
 		Log.d("checkpoint", detail[0] + detail[1]);
 
 		tvNumber.setText(detail[0]);
+		tvNumber.setTag(detail[0]);
+		tvNumber.setOnClickListener(callthis());
 		etPriorityLevel.setText(detail[1]);
 		etRemindInterval.setText(detail[2]);
 
+		try{
 		short hasBeenBlocked=(short) Integer.parseInt(detail[3]);		//1 for blocked 0 for not blocked
 		
 		
@@ -73,6 +79,9 @@ public class RuleSetter extends Activity implements View.OnClickListener {
 
 		changeBlockStatus();
 
+		}catch(Exception e){
+			
+		}
 	}
 
 	private void changeBlockStatus() {
@@ -83,6 +92,35 @@ public class RuleSetter extends Activity implements View.OnClickListener {
 			tvToggleBlock.setText("Add Block");
 
 		}
+	}
+	
+	//on touch call placing method
+	public OnClickListener callthis() {
+		View.OnClickListener clicklisten = new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String number = v.getTag().toString();
+//				number=number.substring(1);				//sometimes we just need to remove the + sign 
+
+				if (number != "") {
+					ToastGreen.toastGood("Calling "+ number, context);
+					
+					try {
+//						long phonenumber = Long.parseLong(number);
+						Intent phoneIntent = new Intent(Intent.ACTION_CALL);
+						phoneIntent.setData(Uri.parse("tel:" + number));
+						phoneIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						context.startActivity(phoneIntent);
+					} catch (Exception e) {
+						System.out.print(e);
+					}
+				} else {
+					ToastGreen.toastBad("cannot call a blank number", context);
+				}
+			}
+		};
+		return clicklisten;
 	}
 
 	@Override

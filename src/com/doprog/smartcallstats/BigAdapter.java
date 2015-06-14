@@ -11,7 +11,7 @@ public class BigAdapter extends ArrayAdapter<String> {
 	// general vars
 	private Context context;
 	private String[] lista;
-	private final int TOTALTIME = 14;
+	private final int TOTALTIME = 30;
 	private final int TIME_ONEBEEP = 2;
 
 	public BigAdapter(Context ctx, int resource, int textViewResourceId,
@@ -113,6 +113,8 @@ public class BigAdapter extends ArrayAdapter<String> {
 			viewHolder.tvStatus.setText("Beeps:" + beeps + "/ "
 					+ this.TOTALTIME / this.TIME_ONEBEEP);
 		} else {
+			viewHolder.tvName.setTextColor(context.getResources().getColor(
+					R.color.black));
 			viewHolder.tvStatus.setText("Time:" + callduration + " Sec");
 		}
 

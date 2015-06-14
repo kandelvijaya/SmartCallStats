@@ -5,9 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Currency;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -37,6 +39,9 @@ public class Launcher extends Activity implements View.OnClickListener {
 
 		// initialize variables before moving ahead:: we need them later
 		intializeVariables();
+		
+		ToggleDetectionService(isMyServiceRunning());		//for toggling to turn on or off the service
+		//This is useful when launching the new instance of the app after killing it once
 	}
 
 	private void intializeVariables() {
@@ -56,6 +61,22 @@ public class Launcher extends Activity implements View.OnClickListener {
 		btnViewReport.setOnClickListener(this);
 		btnShare.setOnClickListener(this);
 
+	}
+	
+	
+	/**
+	 * Return wether this service is already up and running or not 
+	 * True if it is running, false if its not
+	 * */
+	private boolean isMyServiceRunning() {
+	    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (CallDetectService.class.getName().equals(service.service.getClassName())) {
+	            return true;
+	        }
+	    }
+	    return false;
+	    
 	}
 
 	@Override
